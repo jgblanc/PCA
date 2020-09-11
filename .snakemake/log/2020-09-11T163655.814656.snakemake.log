@@ -1,0 +1,3 @@
+Building DAG of jobs...
+MissingRuleException:
+No rule to produce output/PCA/ALL_0.01.eigenvec.var (if you use input functions make sure that they don't raise unexpected exceptions).
