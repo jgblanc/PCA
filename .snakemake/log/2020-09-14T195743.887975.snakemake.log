@@ -1,0 +1,3 @@
+WildcardError in line 6 of /project2/jjberg/jgblanc/PCA/snakefile:
+No values given for wildcard 'MAF'.
+  File "/project2/jjberg/jgblanc/PCA/snakefile", line 6, in <module>
