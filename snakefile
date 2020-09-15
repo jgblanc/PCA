@@ -9,7 +9,7 @@ rule run_pca:
 
 rule plot_pca:
     input:
-        "output/PCA/{POP}/{POP}_{MAF}.eigenvec.var"
+        "output/PCA/{POP}/{POP}_{MAF}.eigenvec"
     output:
         "output/figures/{POP}/{POP}_{MAF}_PCA.png"
     script:
