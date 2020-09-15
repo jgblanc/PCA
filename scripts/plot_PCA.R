@@ -3,12 +3,12 @@
 library(tidyverse)
 library(data.table)
 
-vecs <- fread("../output/PCA/ALL/ALL_0.01.eigenvec")
-pop_info <- fread("../1kg_IDS/20130606_sample_info.txt")
+vecs <- fread(snakemake@input[[1]])
+pop_info <- fread("1kg_IDS/20130606_sample_info.txt")
 
 dat <- inner_join(vecs, pop_info, by = c("V2"= "Sample"))
 p1 <- ggplot(data = dat, aes(x=V3, y=V4, color = Population)) + geom_point() + xlab("PC1") + ylab("PC2")
 
-png('test.png')
+png(snakemake@output[[1]])
 p1
 dev.off()

@@ -1,0 +1,33 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	LD_pruning
+	1
+
+[Sun Sep 13 17:49:28 2020]
+rule LD_pruning:
+    input: output/PCA/ALL/ALL_0.01.eigenvec.var.evo
+    output: output/pruned/ALL/ALL_0.01.50_5_0.5.DA.prune.in
+    jobid: 0
+    wildcards: POP=ALL, MAF=0.01, window=50, step=5, thresh=0.5
+
+[Sun Sep 13 17:49:30 2020]
+Error in rule LD_pruning:
+    jobid: 0
+    output: output/pruned/ALL/ALL_0.01.50_5_0.5.DA.prune.in
+    shell:
+        
+        cut -f2,25 -d',' output/PCA/ALL/ALL_0.01.eigenvec.var.evo > all_ss.temp
+	awk '$2 != "NA"' FS=',' all_ss.temp | cut -f1 -d',' > all_ss.snps #Pick only D/A SNPs and get rsID 
+        plink         --noweb         --bfile ../../data/1kg/bcf/ALL.chr1.phase3_shapeit2_mvncall_integrated_v5.20130502.genotypes.bcf         --extract all_ss.snps         --make-bed         --out all_ss_plink
+        plink         --bfile all_ss_plink         --indep-pairwise 50 5 0.5         --noweb         --out "output/pruned/ALL/ALL_0.01.50_5_0.5.DA
+	rm all_ss*
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /project2/jjberg/jgblanc/PCA/.snakemake/log/2020-09-13T174928.061322.snakemake.log

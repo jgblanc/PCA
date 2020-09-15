@@ -1,0 +1,25 @@
+# Script takes the loadings + evolutionary status file and prune.in file to plot the mean correlation between derived allele status and PC 
+
+# Load libraries
+library(data.table)
+library(tidyverse)
+
+# Read in files 
+all_snps <- fread(snakemake@input[[1]])
+all_da <- all_snps %>% na.omit() # Get rid of no info (DA) SNPs 
+pruned <- fread(snakemake@input[[2]], header = F)
+
+# Create datatable
+loading <- left_join(pruned,all_da, by = c("V1"="V2")) # Keep all pruned SNPs and join on rsID
+only_num <- loading[,5:24] * loading$V25 # Multiple loading by -1 if A2 ancestral and 1 if derived 
+sums <- colMeans(only_num) # Take mean of loadings
+stan_devs <- apply(only_num, 2, sd) # Get SD 
+lower_bound <- sums - (1.960 * (stan_devs / sqrt(nrow(only_num))))
+upper_bound <- sums + (1.960 * (stan_devs / sqrt(nrow(only_num))))
+df_0.01 <- as.data.frame(cbind(sums,seq(1,20)))
+
+# Make plot 
+pl <- ggplot(df_0.01, aes(x=sums,y=V2)) + geom_point(size = 2, color = "navy") + geom_vline(xintercept = 0, color = "red") + ylab("PC") + scale_y_continuous(minor_breaks = seq(1 , 20, 1), breaks = seq(1, 20, 1)) + xlab("Average correlation of the number of derived alleles an individual \n carries and their position on a principal component") + theme_bw()  + geom_errorbarh(aes(xmin = lower_bound, xmax = upper_bound)) + theme_classic() + theme(axis.title= element_text(size = 12, face="bold"), axis.text = element_text(size = 12)) 
+
+# Save plot 
+ggsave(snakemake@output[[1]],pl)

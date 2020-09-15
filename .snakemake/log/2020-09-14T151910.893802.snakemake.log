@@ -1,0 +1,20 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	plot_loadings
+	1
+
+[Mon Sep 14 15:19:13 2020]
+rule plot_loadings:
+    input: output/PCA/ALL/ALL_0.01.eigenvec.var.evo, output/pruned/ALL/ALL_0.01.50_5_0.5.DA.prune.in
+    output: output/pruned/ALL/ALL_0.01.50_5_0.5.png
+    jobid: 0
+    wildcards: POP=ALL, MAF=0.01, window=50, step=5, thresh=0.5
+
+[Mon Sep 14 15:19:26 2020]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: /project2/jjberg/jgblanc/PCA/.snakemake/log/2020-09-14T151910.893802.snakemake.log
