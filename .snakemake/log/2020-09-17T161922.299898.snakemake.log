@@ -1,0 +1,4 @@
+Building DAG of jobs...
+WildcardError in line 3 of /project2/jjberg/jgblanc/PCA/snakefile:
+Wildcards in input files cannot be determined from output files:
+'POP'

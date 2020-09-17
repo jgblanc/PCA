@@ -1,0 +1,33 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 56
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	plot_pca
+	2
+
+[Thu Sep 17 15:57:22 2020]
+rule plot_pca:
+    input: output/PCA/ALL/ALL_0.01.eigenvec
+    output: output/figures/ALL/ALL_0.01_PCA.png
+    jobid: 1
+    wildcards: POP=ALL, MAF=0.01
+
+Terminating processes on user request, this might take some time.
+[Thu Sep 17 15:57:25 2020]
+Error in rule plot_pca:
+    jobid: 1
+    output: output/figures/ALL/ALL_0.01_PCA.png
+
+RuleException:
+CalledProcessError in line 22 of /project2/jjberg/jgblanc/PCA/snakefile:
+Command 'set -euo pipefail;  Rscript --vanilla /project2/jjberg/jgblanc/PCA/.snakemake/scripts/tmpa3ypeom3.plot_PCA.R' returned non-zero exit status 1.
+  File "/home/jgblanc/.local/lib/python3.7/site-packages/snakemake/executors/__init__.py", line 2189, in run_wrapper
+  File "/project2/jjberg/jgblanc/PCA/snakefile", line 22, in __rule_plot_pca
+  File "/home/jgblanc/.local/lib/python3.7/site-packages/snakemake/executors/__init__.py", line 529, in _callback
+  File "/software/python-3.7.0-el7-x86_64/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+  File "/home/jgblanc/.local/lib/python3.7/site-packages/snakemake/executors/__init__.py", line 515, in cached_or_run
+  File "/home/jgblanc/.local/lib/python3.7/site-packages/snakemake/executors/__init__.py", line 2201, in run_wrapper
+Cancelling snakemake on user request.

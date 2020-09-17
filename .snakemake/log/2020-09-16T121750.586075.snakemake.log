@@ -1,0 +1,33 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 56
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	plot_pca
+	1
+
+[Wed Sep 16 12:17:55 2020]
+rule plot_pca:
+    input: output/PCA/ALL/ALL_0.01.eigenvec
+    output: output/figures/ALL/ALL_0.01_PCA.png
+    jobid: 0
+    wildcards: POP=ALL, MAF=0.01
+
+[Wed Sep 16 12:18:01 2020]
+Error in rule plot_pca:
+    jobid: 0
+    output: output/figures/ALL/ALL_0.01_PCA.png
+
+RuleException:
+CalledProcessError in line 16 of /project2/jjberg/jgblanc/PCA/snakefile:
+Command 'set -euo pipefail;  Rscript --vanilla /project2/jjberg/jgblanc/PCA/.snakemake/scripts/tmp9329ij0f.plot_PCA.R' returned non-zero exit status 127.
+  File "/home/jgblanc/.local/lib/python3.7/site-packages/snakemake/executors/__init__.py", line 2189, in run_wrapper
+  File "/project2/jjberg/jgblanc/PCA/snakefile", line 16, in __rule_plot_pca
+  File "/home/jgblanc/.local/lib/python3.7/site-packages/snakemake/executors/__init__.py", line 529, in _callback
+  File "/software/python-3.7.0-el7-x86_64/lib/python3.7/concurrent/futures/thread.py", line 57, in run
+  File "/home/jgblanc/.local/lib/python3.7/site-packages/snakemake/executors/__init__.py", line 515, in cached_or_run
+  File "/home/jgblanc/.local/lib/python3.7/site-packages/snakemake/executors/__init__.py", line 2201, in run_wrapper
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /project2/jjberg/jgblanc/PCA/.snakemake/log/2020-09-16T121750.586075.snakemake.log

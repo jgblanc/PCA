@@ -1,3 +1,13 @@
+pops = ['ALL', 'ASW']
+mafs = [0.01]
+windows = [50,100]
+steps = [5]
+threshs = [0.5]
+
+rule all:
+    input:
+        expand("output/figures/{POP}/{POP}_{MAF}_PCA.png", POP=pops, MAF=mafs),
+	expand("output/figures/{POP}/{POP}_{MAF}.{window}_{step}_{thresh}.png", POP=pops, MAF=mafs, window=windows, step=steps, thresh=threshs)
 
 rule run_pca:
     input:
@@ -5,7 +15,7 @@ rule run_pca:
     output:
         "output/PCA/{POP}/{POP}_{MAF}.eigenvec.var"
     shell:
-        "plink -bcf ../../data/1kg/bcf/ALL.chr1.phase3_shapeit2_mvncall_integrated_v5.20130502.genotypes.bcf --keep 1kg_IDS/{wildcards.POP}.txt --double-id --pca var-wts --out output/PCA/{wildcards.POP}/{wildcards.POP}_{wildcards.MAF} --maf {wildcards.MAF} --no-sex --allow-extra-chr --noweb"
+        "plink -bfile ../../data/1kg/plink-files/files/ALL.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes --keep 1kg_IDS/{wildcards.POP}.txt --pca var-wts --out output/PCA/{wildcards.POP}/{wildcards.POP}_{wildcards.MAF} --maf {wildcards.MAF} --no-sex  --noweb --no-pheno"
 
 rule plot_pca:
     input:
@@ -34,11 +44,10 @@ rule LD_pruning:
 	awk '$2 != "NA"' FS=',' all_ss.temp | cut -f1 -d',' > all_ss.snps #Pick only D/A SNPs and get rsID 
         plink \
         --noweb \
-        --bcf ../../data/1kg/bcf/ALL.chr1.phase3_shapeit2_mvncall_integrated_v5.20130502.genotypes.bcf \
+        --bfile ../../data/1kg/plink-files/files/ALL.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes \
         --extract all_ss.snps \
         --make-bed \
-        --out all_ss_plink \
-	--allow-extra-chr
+        --out all_ss_plink 
         plink \
         --bfile all_ss_plink \
         --indep-pairwise {wildcards.window} {wildcards.step} {wildcards.thresh} \

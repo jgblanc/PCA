@@ -1,0 +1,4 @@
+Building DAG of jobs...
+MissingInputException in line 17 of /project2/jjberg/jgblanc/PCA/snakefile:
+Missing input files for rule plot_pca:
+output/PCA/MSL/MSL_0.01.eigenvec
