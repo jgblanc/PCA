@@ -1,0 +1,20 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	add_evo_info
+	1
+
+[Fri Sep 18 14:04:35 2020]
+rule add_evo_info:
+    input: output/PCA/EAS/EAS_0.01.eigenvec.var
+    output: output/PCA/EAS/EAS_0.01.eigenvec.var.evo
+    jobid: 0
+    wildcards: POP=EAS, MAF=0.01
+
+/software/python-3.7.0-el7-x86_64/bin/python /project2/jjberg/jgblanc/PCA/.snakemake/scripts/tmpkam9n3qh.get_evo_info.py
+[Fri Sep 18 14:08:38 2020]
+Finished job 0.
+1 of 1 steps (100%) done

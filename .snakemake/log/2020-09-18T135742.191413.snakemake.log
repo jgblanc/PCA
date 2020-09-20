@@ -1,0 +1,4 @@
+Building DAG of jobs...
+MissingInputException in line 29 of /project2/jjberg/jgblanc/PCA/snakefile:
+Missing input files for rule add_evo_info:
+output/PCA/ALL/ALL_0.01.eigenvec.var

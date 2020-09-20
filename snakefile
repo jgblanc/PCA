@@ -1,6 +1,6 @@
-pops = ['ALL', 'ASW']
+pops = ['ALL', 'EAS', 'EUR', 'SAS', 'AFR', 'AMR', 'AA', 'MX']
 mafs = [0.01]
-windows = [50,100]
+windows = [50]
 steps = [5]
 threshs = [0.5]
 
@@ -13,7 +13,8 @@ rule run_pca:
     input:
         "1kg_IDS/{POP}.txt"
     output:
-        "output/PCA/{POP}/{POP}_{MAF}.eigenvec.var"
+        "output/PCA/{POP}/{POP}_{MAF}.eigenvec",
+	"output/PCA/{POP}/{POP}_{MAF}.eigenvec.var"
     shell:
         "plink -bfile ../../data/1kg/plink-files/files/ALL.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes --keep 1kg_IDS/{wildcards.POP}.txt --pca var-wts --out output/PCA/{wildcards.POP}/{wildcards.POP}_{wildcards.MAF} --maf {wildcards.MAF} --no-sex  --noweb --no-pheno"
 

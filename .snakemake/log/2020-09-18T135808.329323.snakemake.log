@@ -1,0 +1,31 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 56
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	LD_pruning
+	1	add_evo_info
+	1	all
+	1	plot_loadings
+	1	plot_pca
+	1	run_pca
+	6
+
+[Fri Sep 18 13:58:10 2020]
+rule run_pca:
+    input: 1kg_IDS/ALL.txt
+    output: output/PCA/ALL/ALL_0.01.eigenvec, output/PCA/ALL/ALL_0.01.eigenvec.var
+    jobid: 3
+    wildcards: POP=ALL, MAF=0.01
+
+Terminating processes on user request, this might take some time.
+[Fri Sep 18 13:58:12 2020]
+Error in rule run_pca:
+    jobid: 3
+    output: output/PCA/ALL/ALL_0.01.eigenvec, output/PCA/ALL/ALL_0.01.eigenvec.var
+    shell:
+        plink -bfile ../../data/1kg/plink-files/files/ALL.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes --keep 1kg_IDS/ALL.txt --pca var-wts --out output/PCA/ALL/ALL_0.01 --maf 0.01 --no-sex  --noweb --no-pheno
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Complete log: /project2/jjberg/jgblanc/PCA/.snakemake/log/2020-09-18T135808.329323.snakemake.log

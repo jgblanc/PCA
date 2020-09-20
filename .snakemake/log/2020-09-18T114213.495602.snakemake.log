@@ -1,0 +1,63 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cluster nodes: 500
+Job counts:
+	count	jobs
+	1	LD_pruning
+	1	add_evo_info
+	1	all
+	1	plot_loadings
+	1	run_pca
+	5
+
+[Fri Sep 18 11:42:14 2020]
+rule run_pca:
+    input: 1kg_IDS/ALL.txt
+    output: output/PCA/ALL/ALL_0.01.eigenvec.var
+    jobid: 4
+    wildcards: POP=ALL, MAF=0.01
+
+plink -bfile ../../data/1kg/plink-files/files/ALL.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes --keep 1kg_IDS/ALL.txt --pca var-wts --out output/PCA/ALL/ALL_0.01 --maf 0.01 --no-sex  --noweb --no-pheno
+Submitted job 4 with external jobid 'Submitted batch job 4767840'.
+
+[Fri Sep 18 11:42:14 2020]
+rule add_evo_info:
+    input: output/PCA/ALL/ALL_0.01.eigenvec.var
+    output: output/PCA/ALL/ALL_0.01.eigenvec.var.evo
+    jobid: 2
+    wildcards: POP=ALL, MAF=0.01
+
+Submitted job 2 with external jobid 'Submitted batch job 4767841'.
+
+[Fri Sep 18 11:42:17 2020]
+rule LD_pruning:
+    input: output/PCA/ALL/ALL_0.01.eigenvec.var.evo
+    output: output/pruned/ALL/ALL_0.01.50_5_0.5.DA.prune.in
+    jobid: 3
+    wildcards: POP=ALL, MAF=0.01, window=50, step=5, thresh=0.5
+
+
+        cut -f2,25 -d',' output/PCA/ALL/ALL_0.01.eigenvec.var.evo > all_ss.temp
+	awk '$2 != "NA"' FS=',' all_ss.temp | cut -f1 -d',' > all_ss.snps #Pick only D/A SNPs and get rsID 
+        plink         --noweb         --bfile ../../data/1kg/plink-files/files/ALL.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes         --extract all_ss.snps         --make-bed         --out all_ss_plink 
+        plink         --bfile all_ss_plink         --indep-pairwise 50 5 0.5         --noweb         --out "output/pruned/ALL/ALL_0.01.50_5_0.5.DA"
+	rm all_ss*
+        
+Submitted job 3 with external jobid 'Submitted batch job 4767842'.
+
+[Fri Sep 18 11:42:17 2020]
+rule plot_loadings:
+    input: output/PCA/ALL/ALL_0.01.eigenvec.var.evo, output/pruned/ALL/ALL_0.01.50_5_0.5.DA.prune.in
+    output: output/figures/ALL/ALL_0.01.50_5_0.5.png
+    jobid: 1
+    wildcards: POP=ALL, MAF=0.01, window=50, step=5, thresh=0.5
+
+Submitted job 1 with external jobid 'Submitted batch job 4767847'.
+
+[Fri Sep 18 11:42:19 2020]
+localrule all:
+    input: output/figures/ALL/ALL_0.01_PCA.png, output/figures/ALL/ALL_0.01.50_5_0.5.png
+    jobid: 0
+
+Submitted job 0 with external jobid 'Submitted batch job 4767849'.
+Complete log: /project2/jjberg/jgblanc/PCA/.snakemake/log/2020-09-18T114213.495602.snakemake.log
