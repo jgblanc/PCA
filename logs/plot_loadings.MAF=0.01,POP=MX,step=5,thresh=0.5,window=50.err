@@ -7,14 +7,14 @@ Job counts:
 	1	plot_loadings
 	1
 
-[Fri Sep 18 14:13:35 2020]
+[Sun Sep 20 21:14:08 2020]
 rule plot_loadings:
     input: output/PCA/MX/MX_0.01.eigenvec.var.evo, output/pruned/MX/MX_0.01.50_5_0.5.DA.prune.in
     output: output/figures/MX/MX_0.01.50_5_0.5.png
     jobid: 0
     wildcards: POP=MX, MAF=0.01, window=50, step=5, thresh=0.5
 
-Rscript --vanilla /project2/jjberg/jgblanc/PCA/.snakemake/scripts/tmpjthdfy6b.plot_loadings.R
+Rscript --vanilla /project2/jjberg/jgblanc/PCA/.snakemake/scripts/tmpwg8lprfh.plot_loadings.R
 ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 ✔ ggplot2 3.2.1     ✔ purrr   0.3.4
 ✔ tibble  2.1.3     ✔ dplyr   0.8.3
@@ -28,9 +28,6 @@ Rscript --vanilla /project2/jjberg/jgblanc/PCA/.snakemake/scripts/tmpjthdfy6b.pl
 ✖ dplyr::last()      masks data.table::last()
 ✖ purrr::transpose() masks data.table::transpose()
 Saving 7 x 7 in image
-Warning messages:
-1: Removed 20 rows containing missing values (geom_point). 
-2: Removed 20 rows containing missing values (geom_errorbarh). 
-[Fri Sep 18 14:15:23 2020]
+[Sun Sep 20 21:15:21 2020]
 Finished job 0.
 1 of 1 steps (100%) done

@@ -40,7 +40,7 @@ with open(filepath_GWAS) as fp:
         try:
             #print("yes") 
             DA = da_dict[SNP]
-            print(DA)
+#            print(DA)
             if DA == A1:
                 new_entry = "-1"
 #                print("yes")  

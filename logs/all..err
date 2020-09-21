@@ -7,11 +7,11 @@ Job counts:
 	1	all
 	1
 
-[Sun Sep 20 18:40:38 2020]
+[Sun Sep 20 21:15:27 2020]
 localrule all:
-    input: output/figures/AMR/AMR_0.01_PCA.png, output/figures/AMR/AMR_0.01.50_5_0.5.png
+    input: output/figures/AMR/AMR_0.01_PCA.png, output/figures/ALL/ALL_0.01_PCA.png, output/figures/SAS/SAS_0.01_PCA.png, output/figures/EUR/EUR_0.01_PCA.png, output/figures/AA/AA_0.01_PCA.png, output/figures/MX/MX_0.01_PCA.png, output/figures/EAS/EAS_0.01_PCA.png, output/figures/AFR/AFR_0.01_PCA.png, output/figures/AMR/AMR_0.01.50_5_0.5.png, output/figures/ALL/ALL_0.01.50_5_0.5.png, output/figures/SAS/SAS_0.01.50_5_0.5.png, output/figures/EUR/EUR_0.01.50_5_0.5.png, output/figures/AA/AA_0.01.50_5_0.5.png, output/figures/MX/MX_0.01.50_5_0.5.png, output/figures/EAS/EAS_0.01.50_5_0.5.png, output/figures/AFR/AFR_0.01.50_5_0.5.png
     jobid: 0
 
-[Sun Sep 20 18:40:38 2020]
+[Sun Sep 20 21:15:27 2020]
 Finished job 0.
 1 of 1 steps (100%) done

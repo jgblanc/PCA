@@ -7,14 +7,14 @@ Job counts:
 	1	add_evo_info
 	1
 
-[Fri Sep 18 14:03:50 2020]
+[Sun Sep 20 21:03:59 2020]
 rule add_evo_info:
     input: output/PCA/MX/MX_0.01.eigenvec.var
     output: output/PCA/MX/MX_0.01.eigenvec.var.evo
     jobid: 0
     wildcards: POP=MX, MAF=0.01
 
-/software/python-3.7.0-el7-x86_64/bin/python /project2/jjberg/jgblanc/PCA/.snakemake/scripts/tmp9mcobnhj.get_evo_info.py
-[Fri Sep 18 14:09:08 2020]
+/software/python-3.7.0-el7-x86_64/bin/python /project2/jjberg/jgblanc/PCA/.snakemake/scripts/tmp2emg_mes.get_evo_info.py
+[Sun Sep 20 21:08:27 2020]
 Finished job 0.
 1 of 1 steps (100%) done

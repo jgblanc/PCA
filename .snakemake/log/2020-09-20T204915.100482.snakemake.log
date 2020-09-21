@@ -1,0 +1,184 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cluster nodes: 500
+Job counts:
+	count	jobs
+	4	LD_pruning
+	1	add_evo_info
+	1	all
+	8	plot_loadings
+	1	plot_pca
+	1	run_pca
+	16
+
+[Sun Sep 20 20:49:17 2020]
+rule plot_loadings:
+    input: output/PCA/EAS/EAS_0.01.eigenvec.var.evo, output/pruned/EAS/EAS_0.01.50_5_0.5.DA.prune.in
+    output: output/figures/EAS/EAS_0.01.50_5_0.5.png
+    jobid: 15
+    wildcards: POP=EAS, MAF=0.01, window=50, step=5, thresh=0.5
+
+Submitted job 15 with external jobid 'Submitted batch job 4944490'.
+
+[Sun Sep 20 20:49:17 2020]
+rule LD_pruning:
+    input: output/PCA/SAS/SAS_0.01.eigenvec.var.evo
+    output: output/pruned/SAS/SAS_0.01.50_5_0.5.DA.prune.in
+    jobid: 30
+    wildcards: POP=SAS, MAF=0.01, window=50, step=5, thresh=0.5
+
+
+        cut -f2,25 -d',' output/PCA/SAS/SAS_0.01.eigenvec.var.evo > all_ss_SAS.temp
+	awk '$2 != "NA"' FS=',' all_ss_SAS.temp | cut -f1 -d',' > all_ss_SAS.snps #Pick only D/A SNPs and get rsID 
+        plink         --noweb         --bfile ../../data/1kg/plink-files/files/ALL.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes         --extract all_ss_SAS.snps         --make-bed         --out all_ss_plink_SAS 
+        plink         --bfile all_ss_plink_SAS         --indep-pairwise 50 5 0.5         --noweb         --out "output/pruned/SAS/SAS_0.01.50_5_0.5.DA"
+	rm all_ss_SAS*
+        
+Submitted job 30 with external jobid 'Submitted batch job 4944491'.
+
+[Sun Sep 20 20:49:17 2020]
+rule LD_pruning:
+    input: output/PCA/EUR/EUR_0.01.eigenvec.var.evo
+    output: output/pruned/EUR/EUR_0.01.50_5_0.5.DA.prune.in
+    jobid: 32
+    wildcards: POP=EUR, MAF=0.01, window=50, step=5, thresh=0.5
+
+
+        cut -f2,25 -d',' output/PCA/EUR/EUR_0.01.eigenvec.var.evo > all_ss_EUR.temp
+	awk '$2 != "NA"' FS=',' all_ss_EUR.temp | cut -f1 -d',' > all_ss_EUR.snps #Pick only D/A SNPs and get rsID 
+        plink         --noweb         --bfile ../../data/1kg/plink-files/files/ALL.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes         --extract all_ss_EUR.snps         --make-bed         --out all_ss_plink_EUR 
+        plink         --bfile all_ss_plink_EUR         --indep-pairwise 50 5 0.5         --noweb         --out "output/pruned/EUR/EUR_0.01.50_5_0.5.DA"
+	rm all_ss_EUR*
+        
+Submitted job 32 with external jobid 'Submitted batch job 4944492'.
+
+[Sun Sep 20 20:49:18 2020]
+rule LD_pruning:
+    input: output/PCA/AA/AA_0.01.eigenvec.var.evo
+    output: output/pruned/AA/AA_0.01.50_5_0.5.DA.prune.in
+    jobid: 34
+    wildcards: POP=AA, MAF=0.01, window=50, step=5, thresh=0.5
+
+
+        cut -f2,25 -d',' output/PCA/AA/AA_0.01.eigenvec.var.evo > all_ss_AA.temp
+	awk '$2 != "NA"' FS=',' all_ss_AA.temp | cut -f1 -d',' > all_ss_AA.snps #Pick only D/A SNPs and get rsID 
+        plink         --noweb         --bfile ../../data/1kg/plink-files/files/ALL.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes         --extract all_ss_AA.snps         --make-bed         --out all_ss_plink_AA 
+        plink         --bfile all_ss_plink_AA         --indep-pairwise 50 5 0.5         --noweb         --out "output/pruned/AA/AA_0.01.50_5_0.5.DA"
+	rm all_ss_AA*
+        
+Submitted job 34 with external jobid 'Submitted batch job 4944493'.
+
+[Sun Sep 20 20:49:18 2020]
+rule plot_loadings:
+    input: output/PCA/ALL/ALL_0.01.eigenvec.var.evo, output/pruned/ALL/ALL_0.01.50_5_0.5.DA.prune.in
+    output: output/figures/ALL/ALL_0.01.50_5_0.5.png
+    jobid: 10
+    wildcards: POP=ALL, MAF=0.01, window=50, step=5, thresh=0.5
+
+Submitted job 10 with external jobid 'Submitted batch job 4944494'.
+
+[Sun Sep 20 20:49:18 2020]
+rule plot_loadings:
+    input: output/PCA/AFR/AFR_0.01.eigenvec.var.evo, output/pruned/AFR/AFR_0.01.50_5_0.5.DA.prune.in
+    output: output/figures/AFR/AFR_0.01.50_5_0.5.png
+    jobid: 16
+    wildcards: POP=AFR, MAF=0.01, window=50, step=5, thresh=0.5
+
+Submitted job 16 with external jobid 'Submitted batch job 4944500'.
+
+[Sun Sep 20 20:49:18 2020]
+rule run_pca:
+    input: 1kg_IDS/MX.txt
+    output: output/PCA/MX/MX_0.01.eigenvec, output/PCA/MX/MX_0.01.eigenvec.var
+    jobid: 22
+    wildcards: POP=MX, MAF=0.01
+
+plink -bfile ../../data/1kg/plink-files/files/ALL.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes --keep 1kg_IDS/MX.txt --pca var-wts --out output/PCA/MX/MX_0.01 --maf 0.01 --no-sex  --noweb --no-pheno
+Submitted job 22 with external jobid 'Submitted batch job 4944501'.
+
+[Sun Sep 20 20:49:19 2020]
+rule plot_loadings:
+    input: output/PCA/AMR/AMR_0.01.eigenvec.var.evo, output/pruned/AMR/AMR_0.01.50_5_0.5.DA.prune.in
+    output: output/figures/AMR/AMR_0.01.50_5_0.5.png
+    jobid: 9
+    wildcards: POP=AMR, MAF=0.01, window=50, step=5, thresh=0.5
+
+Submitted job 9 with external jobid 'Submitted batch job 4944502'.
+
+[Sun Sep 20 20:49:20 2020]
+rule plot_pca:
+    input: output/PCA/MX/MX_0.01.eigenvec
+    output: output/figures/MX/MX_0.01_PCA.png
+    jobid: 6
+    wildcards: POP=MX, MAF=0.01
+
+Submitted job 6 with external jobid 'Submitted batch job 4944503'.
+
+[Sun Sep 20 20:49:20 2020]
+rule plot_loadings:
+    input: output/PCA/EUR/EUR_0.01.eigenvec.var.evo, output/pruned/EUR/EUR_0.01.50_5_0.5.DA.prune.in
+    output: output/figures/EUR/EUR_0.01.50_5_0.5.png
+    jobid: 12
+    wildcards: POP=EUR, MAF=0.01, window=50, step=5, thresh=0.5
+
+Submitted job 12 with external jobid 'Submitted batch job 4944504'.
+
+[Sun Sep 20 20:49:21 2020]
+rule add_evo_info:
+    input: output/PCA/MX/MX_0.01.eigenvec.var
+    output: output/PCA/MX/MX_0.01.eigenvec.var.evo
+    jobid: 35
+    wildcards: POP=MX, MAF=0.01
+
+Submitted job 35 with external jobid 'Submitted batch job 4944505'.
+
+[Sun Sep 20 20:49:21 2020]
+rule plot_loadings:
+    input: output/PCA/SAS/SAS_0.01.eigenvec.var.evo, output/pruned/SAS/SAS_0.01.50_5_0.5.DA.prune.in
+    output: output/figures/SAS/SAS_0.01.50_5_0.5.png
+    jobid: 11
+    wildcards: POP=SAS, MAF=0.01, window=50, step=5, thresh=0.5
+
+Submitted job 11 with external jobid 'Submitted batch job 4944506'.
+
+[Sun Sep 20 20:49:22 2020]
+rule plot_loadings:
+    input: output/PCA/AA/AA_0.01.eigenvec.var.evo, output/pruned/AA/AA_0.01.50_5_0.5.DA.prune.in
+    output: output/figures/AA/AA_0.01.50_5_0.5.png
+    jobid: 13
+    wildcards: POP=AA, MAF=0.01, window=50, step=5, thresh=0.5
+
+Submitted job 13 with external jobid 'Submitted batch job 4944507'.
+
+[Sun Sep 20 20:49:22 2020]
+rule LD_pruning:
+    input: output/PCA/MX/MX_0.01.eigenvec.var.evo
+    output: output/pruned/MX/MX_0.01.50_5_0.5.DA.prune.in
+    jobid: 36
+    wildcards: POP=MX, MAF=0.01, window=50, step=5, thresh=0.5
+
+
+        cut -f2,25 -d',' output/PCA/MX/MX_0.01.eigenvec.var.evo > all_ss_MX.temp
+	awk '$2 != "NA"' FS=',' all_ss_MX.temp | cut -f1 -d',' > all_ss_MX.snps #Pick only D/A SNPs and get rsID 
+        plink         --noweb         --bfile ../../data/1kg/plink-files/files/ALL.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes         --extract all_ss_MX.snps         --make-bed         --out all_ss_plink_MX 
+        plink         --bfile all_ss_plink_MX         --indep-pairwise 50 5 0.5         --noweb         --out "output/pruned/MX/MX_0.01.50_5_0.5.DA"
+	rm all_ss_MX*
+        
+Submitted job 36 with external jobid 'Submitted batch job 4944508'.
+
+[Sun Sep 20 20:49:23 2020]
+rule plot_loadings:
+    input: output/PCA/MX/MX_0.01.eigenvec.var.evo, output/pruned/MX/MX_0.01.50_5_0.5.DA.prune.in
+    output: output/figures/MX/MX_0.01.50_5_0.5.png
+    jobid: 14
+    wildcards: POP=MX, MAF=0.01, window=50, step=5, thresh=0.5
+
+Submitted job 14 with external jobid 'Submitted batch job 4944509'.
+
+[Sun Sep 20 20:49:23 2020]
+localrule all:
+    input: output/figures/AMR/AMR_0.01_PCA.png, output/figures/ALL/ALL_0.01_PCA.png, output/figures/SAS/SAS_0.01_PCA.png, output/figures/EUR/EUR_0.01_PCA.png, output/figures/AA/AA_0.01_PCA.png, output/figures/MX/MX_0.01_PCA.png, output/figures/EAS/EAS_0.01_PCA.png, output/figures/AFR/AFR_0.01_PCA.png, output/figures/AMR/AMR_0.01.50_5_0.5.png, output/figures/ALL/ALL_0.01.50_5_0.5.png, output/figures/SAS/SAS_0.01.50_5_0.5.png, output/figures/EUR/EUR_0.01.50_5_0.5.png, output/figures/AA/AA_0.01.50_5_0.5.png, output/figures/MX/MX_0.01.50_5_0.5.png, output/figures/EAS/EAS_0.01.50_5_0.5.png, output/figures/AFR/AFR_0.01.50_5_0.5.png
+    jobid: 0
+
+Submitted job 0 with external jobid 'Submitted batch job 4944510'.
+Complete log: /project2/jjberg/jgblanc/PCA/.snakemake/log/2020-09-20T204915.100482.snakemake.log

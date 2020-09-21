@@ -1,4 +1,4 @@
-pops = ['AMR']
+pops = ['AMR', 'ALL', 'SAS', 'EUR', 'AA', 'MX', 'EAS', 'AFR']
 mafs = [0.01]
 windows = [50]
 steps = [5]
@@ -41,20 +41,21 @@ rule LD_pruning:
         "output/pruned/{POP}/{POP}_{MAF}.{window}_{step}_{thresh}.DA.prune.in"
     shell:
         """
-        cut -f2,25 -d',' {input} > all_ss.temp
-	awk '$2 != "NA"' FS=',' all_ss.temp | cut -f1 -d',' > all_ss.snps #Pick only D/A SNPs and get rsID 
+        cut -f2,25 -d',' {input} > all_ss_{wildcards.POP}.temp
+	awk '$2 != "NA"' FS=',' all_ss_{wildcards.POP}.temp | cut -f1 -d',' > all_ss_{wildcards.POP}.snps #Pick only D/A SNPs and get rsID 
         plink \
         --noweb \
         --bfile ../../data/1kg/plink-files/files/ALL.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes \
-        --extract all_ss.snps \
+        --extract all_ss_{wildcards.POP}.snps \
         --make-bed \
-        --out all_ss_plink 
+        --out all_ss_plink_{wildcards.POP} 
         plink \
-        --bfile all_ss_plink \
+        --bfile all_ss_plink_{wildcards.POP} \
         --indep-pairwise {wildcards.window} {wildcards.step} {wildcards.thresh} \
         --noweb \
         --out "output/pruned/{wildcards.POP}/{wildcards.POP}_{wildcards.MAF}.{wildcards.window}_{wildcards.step}_{wildcards.thresh}.DA"
-	rm all_ss*
+	rm all_ss_plink_{wildcards.POP}*
+	rm all_ss_{wildcards.POP}*
         """
 
 rule plot_loadings:
