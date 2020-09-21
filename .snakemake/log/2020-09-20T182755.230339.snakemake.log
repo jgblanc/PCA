@@ -1,17 +1,18 @@
 Building DAG of jobs...
 Using shell: /bin/bash
-Provided cores: 1 (use --cores to define parallelism)
-Rules claiming more threads will be scaled down.
+Provided cluster nodes: 500
 Job counts:
 	count	jobs
 	1	LD_pruning
-	1
+	1	all
+	1	plot_loadings
+	3
 
-[Sun Sep 20 18:28:05 2020]
+[Sun Sep 20 18:27:58 2020]
 rule LD_pruning:
     input: output/PCA/AMR/AMR_0.01.eigenvec.var.evo
     output: output/pruned/AMR/AMR_0.01.50_5_0.5.DA.prune.in
-    jobid: 0
+    jobid: 5
     wildcards: POP=AMR, MAF=0.01, window=50, step=5, thresh=0.5
 
 
@@ -21,6 +22,21 @@ rule LD_pruning:
         plink         --bfile all_ss_plink         --indep-pairwise 50 5 0.5         --noweb         --out "output/pruned/AMR/AMR_0.01.50_5_0.5.DA"
 	rm all_ss*
         
-[Sun Sep 20 18:39:24 2020]
-Finished job 0.
-1 of 1 steps (100%) done
+Submitted job 5 with external jobid 'Submitted batch job 4931864'.
+
+[Sun Sep 20 18:27:58 2020]
+rule plot_loadings:
+    input: output/PCA/AMR/AMR_0.01.eigenvec.var.evo, output/pruned/AMR/AMR_0.01.50_5_0.5.DA.prune.in
+    output: output/figures/AMR/AMR_0.01.50_5_0.5.png
+    jobid: 2
+    wildcards: POP=AMR, MAF=0.01, window=50, step=5, thresh=0.5
+
+Submitted job 2 with external jobid 'Submitted batch job 4931866'.
+
+[Sun Sep 20 18:27:58 2020]
+localrule all:
+    input: output/figures/AMR/AMR_0.01_PCA.png, output/figures/AMR/AMR_0.01.50_5_0.5.png
+    jobid: 0
+
+Submitted job 0 with external jobid 'Submitted batch job 4931868'.
+Complete log: /project2/jjberg/jgblanc/PCA/.snakemake/log/2020-09-20T182755.230339.snakemake.log

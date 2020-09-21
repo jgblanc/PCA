@@ -1,4 +1,4 @@
-pops = ['ALL', 'EAS', 'EUR', 'SAS', 'AFR', 'AMR', 'AA', 'MX']
+pops = ['AMR']
 mafs = [0.01]
 windows = [50]
 steps = [5]

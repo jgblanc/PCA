@@ -1,6 +1,17 @@
-Waiting at most 5 seconds for missing files.
-Missing files after 5 seconds:
-output/figures/EUR/EUR_0.01.50_5_0.5.png
-output/figures/SAS/SAS_0.01.50_5_0.5.png
-output/figures/AMR/AMR_0.01.50_5_0.5.png
-output/figures/AA/AA_0.01.50_5_0.5.png
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1
+
+[Sun Sep 20 18:40:38 2020]
+localrule all:
+    input: output/figures/AMR/AMR_0.01_PCA.png, output/figures/AMR/AMR_0.01.50_5_0.5.png
+    jobid: 0
+
+[Sun Sep 20 18:40:38 2020]
+Finished job 0.
+1 of 1 steps (100%) done
